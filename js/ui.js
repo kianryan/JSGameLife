@@ -7,13 +7,13 @@ var ui = function (my, spec) {
 		
 	my.rowsInput = $('input#rows');
 	my.colsInput = $('input#cols');
+	my.speedInput = $('input#speed');
 	my.setupButton = $('button#setup');
+	my.indicator = $('span#indicator');
 	my.goButton = $('button#go');
 	my.gameTable = $('table#game');
 		
 	my.life = {};
-	
-	my.speed = 100;
 	
 	my.setup = function() {
 		var rows = my.rowsInput.val(),
@@ -74,6 +74,7 @@ var ui = function (my, spec) {
 			myLife;
 		
 		if (typeof my.lifeTimer === "number") {
+			my.indicator.removeClass("on");
 			window.clearInterval(my.lifeTimer);
 			delete my.lifeTimer;
 		} else {	
@@ -83,8 +84,9 @@ var ui = function (my, spec) {
 					callback: my.callback
 				};
 		
+			my.indicator.addClass("on");
 			myLife = life({}, spec);
-			my.lifeTimer = window.setInterval(myLife.evolve, my.speed);
+			my.lifeTimer = window.setInterval(myLife.evolve, my.speedInput.val());
 		}
 	};
 		

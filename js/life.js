@@ -45,10 +45,10 @@ var life = function (my, spec) {
 				if (i === x && j === y) {
 					continue;
 				}
-				if (i < 0 || i > my.rowLength) {
+				if (i < 0 || i >= my.rowLength) {
 					continue;
 				}
-				if (j < 0 || j > my.height) {
+				if (j < 0 || j >= my.height) {
 					continue;
 				}
 				neighbours.push(my.cells[i + j * my.rowLength]);

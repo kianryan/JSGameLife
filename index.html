@@ -8,11 +8,13 @@
 	</head>
 	<body>
 		
-		<div>
-			<input id="rows" type="text" value="10" />
-			<input id="cols" type="text" value="10" />
+		<div id="toolbar">
+			<label for="rows">Rows: </label><input id="rows" type="text" value="10" />
+			<label for="cols">Cols: </label><input id="cols" type="text" value="10" />
+			<label for="speed">Speed: </label><input id="speed" type="text" value="100" />
 			<button id="setup">setup</button>
 			<button id="go">start/stop</button>
+			<span id="indicator"></span>
 		</div>
 		
 		<table id="game">

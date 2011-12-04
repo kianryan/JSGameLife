@@ -82,7 +82,7 @@ describe("A game of life", function() {
 		expect(neighbours).toEqual([2, 4, 5]);
 	});
 	
-	it("an edge cell has neighbours", function() {
+	it("an left edge cell has neighbours", function() {
 		var state = {
 			rowLength: 3,
 			cells : [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -91,6 +91,17 @@ describe("A game of life", function() {
 		var neighbours = myLife.getNeighbours(3).sort();
 		
 		expect(neighbours).toEqual([1, 2, 5, 7, 8]);
+	});
+	
+	it("a right edge cell has neighbours", function() {
+		var state = {
+			rowLength : 3,
+			cells : [1, 2, 3, 4, 5, 6, 7, 8, 9]
+		};
+		var myLife = life({}, state);
+		var neighbours = myLife.getNeighbours(5).sort();
+		
+		expect(neighbours).toEqual([2, 3, 5, 8, 9]);
 	});
 	
 	it("a grid evolves", function() {

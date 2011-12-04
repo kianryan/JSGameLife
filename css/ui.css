@@ -1,4 +1,9 @@
-table#game { border: 2px solid black; border-collapse: collapse; }
-table#game tr { border: 2px solid black; }
-table#game tr td { border: 2px solid black; width: 10px; height: 10px; }
+body { font-family: sans-serif; font-size: 12px; }
+div#toolbar { padding: 10px; margin-bottom: 10px; background-color: #dddddd;}
+div#toolbar input { width: 50px; }
+div#toolbar span#indicator { display: inline-block; width: 10px; height: 10px; background-color:red; }
+div#toolbar span#indicator.on { background-color: green; }
+table#game { border-collapse: collapse; }
+table#game tr { }
+table#game tr td { border: 2px solid #aaa; width: 10px; height: 10px; }
 table#game tr td.on { background-color: black; }
