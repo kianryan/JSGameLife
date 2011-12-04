@@ -1,58 +1,107 @@
 
 describe("A game of life", function() {
+
+	it("is a grid", function() {
+		var state = { cells : [true, true, true, true, true, true, true, true, true]};
+		var myLife = life({}, state);
+		
+		expect(myLife.getCount()).toEqual(9);
+	});
 	
-	it ("initalizes the size of grid", function() {
-		var spec = {
-			gridDim : 3
-		};
+	it("a live cell with fewer than two live neighbours dies", function() {
+		var neighbours = [true];
+		var myLife = life();
+		
+		expect(myLife.evolveCell(true, neighbours)).toEqual(false);
+	});
+	
+	it("a live cell with two live neighbours lives", function() {
+		var neighbours = [true, true];
+		var myLife = life();
+		
+		expect(myLife.evolveCell(true, neighbours)).toEqual(true);
+	});
+	
+	it("a live cell with three live neighbours lives", function() {
+		var neighbours = [true, true, true];
+		var myLife = life();
+		
+		expect(myLife.evolveCell(true, neighbours)).toEqual(true);
+	});
+	
+	it("a live cell with more than three live neightbours dies", function() {
+		var neighbours = [true, true, true, true];
+		var myLife = life();
+		
+		expect(myLife.evolveCell(true, neighbours)).toEqual(false);
+	});
+	
+	it("a dead cell with three live neighbours becomes a live cell", function() {
+		var neighbours = [true, true, true];
+		var myLife = life();
+		
+		expect(myLife.evolveCell(false, neighbours)).toEqual(true);
+	});
+	
+	it("a dead cell with otherwise stays dead", function() {
+		var neighbours = [true];
+		var myLife = life();
+		
+		expect(myLife.evolveCell(false, neighbours)).toEqual(false);
+	});
+	
+	it("a cell tells the world its changed", function() {
+		var neighbours = [true];
+		var signal = false;
+		var spec = { callback: function() { signal = true; } };
 		var myLife = life({}, spec);
 		
-		expect(myLife.gridSize()).toEqual(9);
+		myLife.evolveCell(false, neighbours, 1);
+		expect(signal).toEqual(true);
 	});
 	
-	it ("initalize the cell states", function() {
-		var spec = {
-			gridDim : 3,
-			cells : [true, true, true, true, true, true, true, true, true]
+	it("a cell has neighbours", function() {
+		var state = { 
+			rowLength: 3, 
+			cells : [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		};
+		var myLife = life({}, state);
+		var neighbours = myLife.getNeighbours(4).sort();
 		
-		var myLife = life({}, spec);
-		
-		expect(myLife.isAlive(0, 0)).toEqual(true);
-		expect(myLife.isAlive(-1, -1)).toEqual(false);
-		expect(myLife.isAlive(1, 1)).toEqual(true);
-		expect(myLife.isAlive(3, 3)).toEqual(false);
-		expect(myLife.isAlive(-1, 3)).toEqual(false);
-		expect(myLife.isAlive(3, -1)).toEqual(false);
+		expect(neighbours).toEqual([1, 2, 3, 4, 6, 7, 8, 9]);
 	});
 	
-	it ("counts the neighbours", function() {
-		
-		var spec = {
-			gridDim : 3,
-			cells : [true, true, true, true, true, true, true, true, true]	
+	it("a corner cell has neighbours", function() {
+		var state = {
+			rowLength: 3,
+			cells : [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		};
+		var myLife = life({}, state);
+		var neighbours = myLife.getNeighbours(0).sort();
 		
-		var myLife = life({},spec);
-		
-		expect(myLife.countLiveNeighbours(0, 0)).toEqual(3);
-		expect(myLife.countLiveNeighbours(1, 1)).toEqual(8);
-		expect(myLife.countLiveNeighbours(2, 2)).toEqual(3);
-		expect(myLife.countLiveNeighbours(3, 3)).toEqual(1);
+		expect(neighbours).toEqual([2, 4, 5]);
 	});
 	
-	if ("count the more interesting neighbours", function() {
-		
-		var spec = {
-			gridDim : 3,
-			cells : [true, false, true, false, true, false, true, false, false]
+	it("an edge cell has neighbours", function() {
+		var state = {
+			rowLength: 3,
+			cells : [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		};
+		var myLife = life({}, state);
+		var neighbours = myLife.getNeighbours(3).sort();
 		
-		var myLife = life({},spec);
+		expect(neighbours).toEqual([1, 2, 5, 7, 8]);
+	});
+	
+	it("a grid evolves", function() {
+		var state = {
+			rowLength: 3,
+			cells : [true, true, true, false, true, false, false, false, false]
+		};
+		var newCells = [true, true, true, true, true, true, false, false, false];
 		
-		expect(myLife.countLiveNeighbours(0, 0)).toEqual(1);
-		expect(myLife.countLiveNeighbours(1, 1)).toEqual(4);
-		expect(myLife.countLiveNeighbours(1, 2)).toEqual(3);
+		var myLife = life({}, state);
 		
+		expect(myLife.evolve()).toEqual(newCells);
 	});
 });

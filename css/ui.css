@@ -1,0 +1,4 @@
+table#game { border: 2px solid black; border-collapse: collapse; }
+table#game tr { border: 2px solid black; }
+table#game tr td { border: 2px solid black; width: 10px; height: 10px; }
+table#game tr td.on { background-color: black; }
