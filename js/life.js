@@ -42,16 +42,9 @@ var life = function (my, spec) {
 	
 		for (i = x - 1; i <= x + 1; i += 1) {
 			for (j = y - 1; j <= y + 1; j += 1) {
-				if (i === x && j === y) {
-					continue;
+				if (! (i === x && j === y || i < 0 || i >= my.rowLength || j < 0 || j >= my.height)) {
+					neighbours.push(my.cells[i + j * my.rowLength]);
 				}
-				if (i < 0 || i >= my.rowLength) {
-					continue;
-				}
-				if (j < 0 || j >= my.height) {
-					continue;
-				}
-				neighbours.push(my.cells[i + j * my.rowLength]);
 			}
 		}
 		
