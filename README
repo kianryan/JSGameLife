@@ -1,1 +1,6 @@
-A javascript implementation of Conway's Game of Life
+A Javascript implementation of Conway's Game of Life
+
+Includes tests using Jasmine (run specrunner.html).
+
+Specify cols/rows to generate a new grid, then click to set inital cell states.
+Start/Stop at any time and change cell states.
